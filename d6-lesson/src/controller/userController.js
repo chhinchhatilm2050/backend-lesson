@@ -1,7 +1,7 @@
 import { UserModel } from "../models/user.js";
 import asyncHandler from 'express-async-handler'
 export const getAllUsers = asyncHandler(async (req, res) => {
-    const users = await UserModel.find({});
+    const users = await UserModel.find({}).populate('posts').populate('postCount');
     return res.json(users);
 })
 
