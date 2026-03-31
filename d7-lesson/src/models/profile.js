@@ -1,7 +1,11 @@
 import mongoose from "mongoose";
 const profileSchema = new mongoose.Schema({
     nickname: String,
-    photo: String
+    userId: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        ref: 'User'
+    }
 }, {
     timestamps: true,
     id: false,

@@ -1,0 +1,13 @@
+import { Router } from "express";
+import { userRouter } from "./userRoutes.js";
+import { postRouter } from "./postRouters.js";
+import { profileRouter } from "./profileRoutes.js";
+import { authRouter } from "./authRoutes.js";
+import fileRouter from "./fileRoutes.js";
+const router = Router();
+router.use('/users', userRouter);
+router.use('/posts', postRouter);
+router.use('/profiles', profileRouter);
+router.use('/profiles', fileRouter);
+router.use('/auth', authRouter);
+export {router};
