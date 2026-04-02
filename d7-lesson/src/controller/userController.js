@@ -1,7 +1,16 @@
 import { UserModel } from "../models/user.js";
 import asyncHandler from 'express-async-handler'
 export const getAllUsers = asyncHandler(async (req, res) => {
-    const users = await UserModel.find({}).populate('posts').populate('postCount');
+    const users = await UserModel.find({})
+    .populate('posts')
+    .populate('postCount')
+    .populate({
+        path: 'profile',
+        populate: { 
+            path: 'file',
+            select:'url '
+        } 
+    });
     return res.json(users);
 })
 
@@ -12,7 +21,7 @@ export const getUserById = asyncHandler(async (req, res) => {
 });
 
 export const createUser = asyncHandler(async (req, res) => {
-    const {firstName, lastName, dateOfBirth, username, age, password, email} = req.body;
+    const {firstName, lastName, dateOfBirth, username, age, password, email, role} = req.body;
     const user = new UserModel({
         firstName,
         lastName,
@@ -20,7 +29,8 @@ export const createUser = asyncHandler(async (req, res) => {
         username,
         age,
         password,
-        email
+        email,
+        role
     })
     await user.save();
     res.status(201).json({

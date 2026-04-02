@@ -11,6 +11,12 @@ const profileSchema = new mongoose.Schema({
     id: false,
     toJSON: { virtuals: true },
     toObject: { virtuals: true }
+});
+
+profileSchema.virtual('file', {
+    ref: 'File',
+    localField: '_id',
+    foreignField: 'profileId'
 })
 
 const ProfileModel = mongoose.model('Profile', profileSchema);

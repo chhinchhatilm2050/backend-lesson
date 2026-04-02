@@ -23,6 +23,6 @@ export const createProfile = asyncHanler( async(req, res) => {
     })
 });
 export const getAllProfiles = asyncHanler( async(req, res) => {
-    const profiles = await ProfileModel.find({});
+    const profiles = await ProfileModel.find({}).populate('userId', 'email').populate('file')
     res.json(profiles)
 })

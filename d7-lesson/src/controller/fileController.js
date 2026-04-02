@@ -13,7 +13,7 @@ export const uploadFile = asyncHandler(async (req, res, next) => {
 
   const fileData = new FileModel({
     profileId,
-    originalName: file.originalname,
+    filename: file.originalname, 
     type: file.mimetype,
     size: file.size,
     key: key,

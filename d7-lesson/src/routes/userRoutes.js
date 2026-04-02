@@ -1,10 +1,13 @@
 import { getAllUsers, getUserById, createUser, updateUser, deleteUser } from '../controller/userController.js';
 import { Router } from 'express';
 import { verifyJWT } from '../middleware/validateJwt.js';
+import { authorize } from '../middleware/authorize.js';
 const userRouter = Router();
+userRouter.use(verifyJWT);
+userRouter.use(authorize('admin'));
 userRouter.get('/', verifyJWT, getAllUsers);
 userRouter.get('/:id', getUserById);
 userRouter.post('/', createUser);
 userRouter.put('/:id', updateUser);
-userRouter.delete('/:id', deleteUser)
+userRouter.delete('/:id', deleteUser);
 export {userRouter};

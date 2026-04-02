@@ -4,7 +4,8 @@ dns.setServers(['8.8.8.8', '8.8.4.4']);
 const connectDB = async () => {
     try {
         await mongoose.connect(process.env.MONGO_ATLAS, {
-            dbName: 'd6-lesson'
+            dbName: 'd6-lesson',
+            autoIndex: true
         });
         console.log('MongoDB connected Successfully');
     } catch(error) {

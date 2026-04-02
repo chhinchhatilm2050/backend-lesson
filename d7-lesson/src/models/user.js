@@ -14,7 +14,9 @@ const userSchema = new mongoose.Schema({
         required: true,
         trim: true
     },
-    username: String,
+    username: {
+        type: String
+    },
     dateOfBirth: {
         type: Date,
         required: true
@@ -33,6 +35,14 @@ const userSchema = new mongoose.Schema({
         select: false,
         trim: true,
         minLength: 8
+    },
+    refreshToken: {
+        type: String
+    },
+    role: {
+        type: String,
+        enum: ['user', 'editor', 'admin'],
+        default: 'user'
     },
     email: {
         type: String,
@@ -53,6 +63,13 @@ userSchema.virtual('posts', {
     foreignField: 'author'
 });
 
+userSchema.virtual('profile', {
+    ref: 'Profile',
+    localField: '_id',
+    foreignField: 'userId'
+});
+
+
 userSchema.virtual('postCount', {
     ref: 'Post',
     localField: '_id',
@@ -66,6 +83,7 @@ userSchema.pre('save', async function () {
         return this.password =  await bcrypt.hash(this.password, saltRounds);
     } 
 });
+
 
 userSchema.methods.isMatch = async function(enterPassword) {
     return await bcrypt.compare(enterPassword, this.password)

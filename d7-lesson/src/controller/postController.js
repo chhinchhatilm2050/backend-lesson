@@ -4,10 +4,7 @@ export const getAllPosts = asyncHandler( async(req, res) => {
     const posts =  await PostModel.find({}).populate({
         path: 'author',
         select: 'firstName lastName age',
-        populate: {
-            path: 'profile',
-            select: "nickname photo"
-        }
+       
     });
     res.json({
         success: true,
